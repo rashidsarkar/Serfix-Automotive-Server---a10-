@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
@@ -28,7 +28,7 @@ async function run() {
     // await client.connect();
     const carDatabase = client.db("carDatabaseDB").collection("Cars");
     const itemCartDatabase = client
-      .db("carDatabaseDB")
+      .db("itemOnCartDatabaseDB")
       .collection("itemOnCart");
 
     app.post("/cars", async (req, res) => {
@@ -39,6 +39,15 @@ async function run() {
     app.get("/cars", async (req, res) => {
       const cursor = carDatabase.find();
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.get("/cars/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const quary = { _id: new ObjectId(id) };
+
+      const result = await carDatabase.findOne(quary);
+
       res.send(result);
     });
 
