@@ -63,6 +63,15 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/itemOnCart/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const quary = { _id: new ObjectId(id) };
+      const result = await itemCartDatabase.findOne(quary);
+
+      res.send(result);
+    });
+
     app.delete("/itemOnCart/:id", async (req, res) => {
       const id = req.params.id;
       const quary = { _id: new ObjectId(id) };
