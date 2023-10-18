@@ -72,6 +72,28 @@ async function run() {
       res.send(result);
     });
 
+    app.put("/cars/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const upDateCar = req.body;
+
+      const car = {
+        $set: {
+          name: upDateCar.name,
+          image: upDateCar.image,
+          brand: upDateCar.brand,
+          type: upDateCar.type,
+          price: upDateCar.price,
+          shortDescription: upDateCar.shortDescription,
+          ratingvalue: upDateCar.ratingvalue,
+        },
+        // $set :updatData
+      };
+      const result = await carDatabase.updateOne(filter, car, options);
+      res.send(result);
+    });
+
     app.delete("/itemOnCart/:id", async (req, res) => {
       const id = req.params.id;
       const quary = { _id: new ObjectId(id) };
