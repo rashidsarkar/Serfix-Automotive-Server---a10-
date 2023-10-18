@@ -28,6 +28,17 @@ async function run() {
     // await client.connect();
     const carDatabase = client.db("carDatabaseDB").collection("Cars");
 
+    app.post("/cars", async (req, res) => {
+      const carFromUI = req.body;
+      const result = await carDatabase.insertOne(carFromUI);
+      res.send(result);
+    });
+    app.get("/cars", async (req, res) => {
+      const cursor = carDatabase.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
