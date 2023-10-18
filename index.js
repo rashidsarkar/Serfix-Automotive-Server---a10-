@@ -48,6 +48,11 @@ async function run() {
       const result = await itemCartDatabase.insertOne(carFromUI);
       res.send(result);
     });
+    app.get("/itemOnCart", async (req, res) => {
+      const cursor = itemCartDatabase.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
