@@ -43,6 +43,11 @@ async function run() {
     });
 
     // cart item
+    app.post("/itemOnCart", async (req, res) => {
+      const carFromUI = req.body;
+      const result = await itemCartDatabase.insertOne(carFromUI);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
