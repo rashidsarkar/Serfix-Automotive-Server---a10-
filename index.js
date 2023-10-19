@@ -56,7 +56,14 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    app.get("/brandName/:brands", async (req, res) => {
+      const brandName = req.params.brands;
 
+      const query = { brand: brandName };
+      const result = await carDatabase.find(query).toArray();
+
+      res.send(result);
+    });
     // cart item
     app.post("/itemOnCart", async (req, res) => {
       const carFromUI = req.body;
