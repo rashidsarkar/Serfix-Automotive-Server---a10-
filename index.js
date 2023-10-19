@@ -41,6 +41,7 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
 
@@ -50,10 +51,16 @@ async function run() {
 
       res.send(result);
     });
+    app.get("/brandName", async (req, res) => {
+      const cursor = carDatabase.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     // cart item
     app.post("/itemOnCart", async (req, res) => {
       const carFromUI = req.body;
+      // console.log(carFromUI);
       const result = await itemCartDatabase.insertOne(carFromUI);
       res.send(result);
     });
