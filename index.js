@@ -88,7 +88,7 @@ async function run() {
           shortDescription: upDateCar.shortDescription,
           ratingvalue: upDateCar.ratingvalue,
         },
-        // $set :updatData
+        // $set :updatDatas
       };
       const result = await carDatabase.updateOne(filter, car, options);
       res.send(result);
