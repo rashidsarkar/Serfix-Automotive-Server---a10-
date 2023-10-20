@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 //  MONGODB DATABASE USER PASSWORD
-
+// const uri = "mongodb://127.0.0.1:27017";
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ydmxw3q.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -67,7 +67,7 @@ async function run() {
     // cart item
     app.post("/itemOnCart", async (req, res) => {
       const carFromUI = req.body;
-      // console.log(carFromUI);
+
       const result = await itemCartDatabase.insertOne(carFromUI);
       res.send(result);
     });
@@ -76,10 +76,16 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    app.get("/itemOnCartUser/:user", async (req, res) => {
+      const userId = req.params.user;
+      const filter = { userUID: userId };
+      const result = await itemCartDatabase.find(filter).toArray();
+      res.send(result);
+    });
 
     app.get("/itemOnCart/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id);
+
       const quary = { _id: new ObjectId(id) };
       const result = await itemCartDatabase.findOne(quary);
 
