@@ -77,11 +77,11 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/itemOnCart/:userId", async (req, res) => {
-      const fromUIUserid = req.params.userId;
-      // console.log(fromUIUserid);
-      const quary = { currentUserId: fromUIUserid };
-      const result = await itemCartDatabase.find(quary).toArray();
+    app.get("/itemOnCart/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const quary = { _id: new ObjectId(id) };
+      const result = await itemCartDatabase.findOne(quary);
 
       res.send(result);
     });
